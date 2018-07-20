@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: frontendsql # Service name
+  
+spec:
+  selector:
+    app:  frontendsql
+  ports:
+  - port: 80
+    targetPort: 3000
+  type: LoadBalancer

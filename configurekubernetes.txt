@@ -1,0 +1,11 @@
+gcloud config set project ${project} && \ 
+gcloud config set compute/zone ${zone}&& \
+gcloud container clusters get-credentials cluster-${name}  && \
+kubectl run frontend --image eu.gcr.io/mhphackathon/my-image:f455d7b7-b387-4205-ba25-3d3184919d1d  --port 3000 && \
+kubectl expose deployment frontend --type LoadBalancer --port 80 --target-port 3000   && \
+kubectl run crudapi --image eu.gcr.io/mhphackathon/my-image:f455d7b7-b387-4205-ba25-3d3184919d1d  --port 3000 && \
+kubectl expose deployment crudapi --type LoadBalancer --port 80 --target-port 3000  && \
+kubectl run restapi --image eu.gcr.io/mhphackathon/my-image:f455d7b7-b387-4205-ba25-3d3184919d1d  --port 3000 && \
+kubectl expose deployment restapi --type LoadBalancer --port 80 --target-port 3000  \
+kubectl create secret generic cloudsql-instance-credentials --from-file=credentials.json=serviceaccount-sqlproxy.json
+kubectl create secret generic cloudsql-db-credentials  --from-literal=username=${sqluser} --from-literal=password=${sqlpassword}
